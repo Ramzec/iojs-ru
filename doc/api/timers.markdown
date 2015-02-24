@@ -1,34 +1,38 @@
-# Timers
+# Таймеры
 
-    Stability: 5 - Locked
+    Стабильность: 5 - Заблокирован ????
 
-All of the timer functions are globals.  You do not need to `require()`
-this module in order to use them.
+Все функции для управления таймерами являются глобальными.
+Вам не нужно делать require() какого либо модуля для получения
+доступа к данным функциям.
 
 ## setTimeout(callback, delay[, arg][, ...])
 
-To schedule execution of a one-time `callback` after `delay` milliseconds. Returns a
-`timeoutObject` for possible use with `clearTimeout()`. Optionally you can
-also pass arguments to the callback.
+Однократный вызов функции обратного вызова по истечению `delay` миллисекунд.
+Возвращает объект `timeoutObject`, который может использоваться для остановки
+таймера при помощи `clearTimeout()`. По необходимости можно указать аргументы,
+которые будут переданы в функцию обратного вызова.
 
-It is important to note that your callback will probably not be called in exactly
-`delay` milliseconds - io.js makes no guarantees about the exact timing of when
-the callback will fire, nor of the ordering things will fire in. The callback will
-be called as close as possible to the time specified.
+Важно помнить что функция обратного вызова вероятно не будет вызвана в точности
+после `delay` миллисекунд - io.js не дает гарантий как в точности отсчета времени,
+по истечении которого будет вызвана функция обратного вызова, так и в порядке их
+вызова. Функция обратного вызова будет вызвана настолько близко к указанному значению
+насколько это будет возможно.
 
 ## clearTimeout(timeoutObject)
 
-Prevents a timeout from triggering.
+Останавливает однократный таймер, на который указывает `timeoutObject`
 
 ## setInterval(callback, delay[, arg][, ...])
 
-To schedule the repeated execution of `callback` every `delay` milliseconds.
-Returns a `intervalObject` for possible use with `clearInterval()`. Optionally
-you can also pass arguments to the callback.
+Периодический вызов функции обратного вызова каждый `delay` миллисекунд.
+Возвращает объект `intervalObject`, который может использоваться для остановки
+таймера при помощи `clearInterval()`. По необходимости можно указать аргументы,
+которые будут переданы в функцию обратного вызова.
 
 ## clearInterval(intervalObject)
 
-Stops an interval from triggering.
+Останавливает интервальный таймер, на который указывает `intervalObject`. 
 
 ## unref()
 
@@ -49,16 +53,18 @@ request the timer hold the program open. If the timer is already `ref`d calling
 
 ## setImmediate(callback[, arg][, ...])
 
-To schedule the "immediate" execution of `callback` after I/O events
-callbacks and before `setTimeout` and `setInterval` . Returns an
-`immediateObject` for possible use with `clearImmediate()`. Optionally you
-can also pass arguments to the callback.
+Немедленный вызов `callback` после вызова всех функций обратного вызова,
+которые ожидают событий от подсистемы ввода-вывода, но перед функциями,
+который запланированы при помощи `setTimeout` и `setInterval`. Возвращает
+объект `immediateObject`, который может использоваться для остановки таймера
+при помощи `clearImmediate()`. По необходимости можно указать аргументы,
+которые будут переданы в функцию обратного вызова.
 
-Callbacks for immediates are queued in the order in which they were created.
-The entire callback queue is processed every event loop iteration. If you queue
-an immediate from inside an executing callback, that immediate won't fire
-until the next event loop iteration.
+Функции обратного вызова в данном случае ставятся в очередь в порядке создания
+объектов `immediateObject`. Данная очередь обрабатывает на каждой итерации цикла.
+Если Вы создали `immediateObject` внутри какой либо функции обратного вызова, тогда
+запланированная функция не будет вызвана до следующей итерации цикла.
 
 ## clearImmediate(immediateObject)
 
-Stops an immediate from triggering.
+Останавливает таймер немедленного вызова, на который указывает объект `immediateObject`
